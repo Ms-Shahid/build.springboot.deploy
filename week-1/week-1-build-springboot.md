@@ -1,183 +1,341 @@
+# ✅ Week 1: Introduction to Spring & Spring Boot
 
-## Week 1 : Introduction to Spring & Spring-boot
--------
-### Introduction to Spring Framework 
+---
 
-Spring & SpringBoot
+## 1. What Is Spring?
 
+Spring is a **Java framework that simplifies enterprise application development** by solving:
 
+* Dependency Management
+* Object Lifecycle Management
+* Configuration Complexity
+* Scalability & Testability
 
+### ❌ Problem With Traditional Java (Tightly Coupled Code)
+
+```java
+class OrderService {
+    private PaymentService paymentService = new PaymentService();
+}
 ```
-    class orderService{
-        private PaymentService paymentService = new PaymentService();
-    }
+
+### 🔴 Issues in the Above Code
+
+* Tight coupling
+* Hard to test or mock
+* No centralized object lifecycle
+* Poor scalability
+* Scattered object creation
+* Violates SOLID principles
+
+This approach becomes **dangerous at scale**, like in:
+
+* Amazon Order Processing
+* Instagram Feed Pipelines
+* OpenAI API serving layers
+
+---
+
+## 2. JEE (Java Enterprise Edition) Problems
+
+Before Spring, developers struggled with:
+
+* Manual JDBC & ORM integration
+* Heavy XML configuration
+* Deployment complexity
+* Repetitive boilerplate code
+* Poor modularity
+
+➡️ Spring was created to **simplify all of this**.
+
+---
+
+## 3. What Does Spring Provide?
+
+Spring solves **Dependency Injection + Object Lifecycle + Modular Design**.
+
+### Spring Ecosystem
+
+* Spring Core (IoC, Beans)
+* Spring Context
+* Spring AOP
+* Spring Web (MVC, WebSockets)
+* Spring Data (JPA, JDBC, ORM)
+* Spring Security
+* Spring Kafka
+* Spring Cloud
+* Spring Integration
+* Spring State Machine
+
+---
+
+## 4. History of Spring
+
+| Year        | Event                           |
+| ----------- | ------------------------------- |
+| Early 2000s | Heavy J2EE, manual DI           |
+| 2004        | Inversion of Control introduced |
+| 2004–2017   | Maintained by VMware            |
+| 2014        | Spring Boot Released            |
+
+---
+
+## 5. What Is Spring Boot?
+
+> **Spring Boot = Spring Framework + Auto-Configuration + Embedded Server + Developer Tooling**
+
+### ✅ Why Spring Boot Exists
+
+* No XML configs
+* Auto-configured dependencies
+* Embedded Tomcat/Jetty
+* Production-ready apps in minutes
+
+---
+
+## 6. Core Spring Concepts You Must Know
+
+### ✅ Inversion of Control (IoC)
+
+Spring **controls object creation**, not you.
+
+---
+
+### ✅ Dependency Injection (DI)
+
+Types:
+
+* Constructor Injection ✅ Preferred
+* Setter Injection
+* Field Injection ❌ Avoid in production
+
+---
+
+### ✅ Spring Beans
+
+> A **Bean is a Java object managed by Spring IoC Container**.
+
+```java
+@Component
+class PaymentService {}
 ```
 
+Injected via:
 
-The problems with this code
-
-
-
-No proper readability, interms of code uniqueness
-Tigthly coupled system,
-Hard to test / mock
-Scattered object creation -> Managing the objects life cycles, injecting objects. 
-
-
-----
-
-
-
-#### JEE ( Java Entriprice Edition )
-
-Insufficient JDBC(Java db connection ) & ORM (object relationship mapping) Integration 
-scattered configuration 
-deployment configuration & complexity 
-Repetative coding or configurations 
-----
-
-
-
-
-
-Spring Framework
-
-
-Spring Framework is a framework that solves the problem of dependency injection, where multiple instance of the objects are scattered across the application, Spring provides various frameworks, that can be used to solve the high scable, robuost problem.
-
-
-
-
-
-There are many framework / ecosystem that spring framework provides
-
-
-
-Spring Core : Spring core, spring Context, expression language, Beans
-Spring Data integration : JDBC, ORM,
-Spring AOP ( Aspect Objected programming ) :
-Spring Web : Servelet, Web sockets
-
-
-Along with Spring, -> SpringBoot
-
-
-Spring Framework
-Spring Boot
-Spring cloud
-Spring data
-Spring Authentication
-Spring Kafka
-Spring security
-Spring statemachine
-Spring Integration
-
-
-----------
-
-History
-
-- Early 2000, with JEE developers had to manually inject the -   
-- dependencies & objects, leading to high maintaince ->
-- 2004, Inversion of Control ( IOC ) -> core concept behind the Spring framework,
-- 2004 - 2017 : VMware took the maintaince
-- 2014 : Springboot released
-
-------
-
-
-`Spring Boot -> Spring framework + Auto configuration + Conversion + Tools`
-
-Before proceeding with Springboot, understanding the Spring framework essentials & internals are crucial 
-
-- Inversion of control (IOC) 
-- Dependency Injection 
-  - `@component`, `@Autowired`, `constrcutor-injection`, `setting-injection`
-- Bean management : `@configuration`, `@Bean`
-- Spring context ( Application Context )
-- Spring MVC ( model view controller ) : `@controller`, `@RestController`, `@RequestMapping`
-
-
-### Setting up A Spring Boot project
-
-- IDE -> `start.io.spring` to create the spring boot project 
-- File strcuture in Springboot project 
-    - src/../mainApplication : contains the main file or business logic files 
-    - src/resources : contains static content, templates & `application.properties` file for storing the important properties of the project like debugging, db's connection, ...
-   - test/../testApplication : contains the testing files, unit, integration, functional 
-  - pom.xml : Project object Model ( file for handling dependencies )
-
-
-### Beans in Spring Framework
-
-Beans -> A Java object(POJO's) managed by Spring 
-These Beans are instantiated by Spring, Configured by Spring & managed throughout its lifecyle by spring 
-
-> Beans form the backbone of a spring application & are the core bulding blocks that are wired together to create the application 
-
-Spring bean will be injected via Dependency injection(DI), when we want to create the objects that should be managed by Spring.
-
-For achiveing this, at the class( The object/instace needs to be created ) level should be annotated by `@Component`, the control of creating, managing, or even destroying the object life cycle will be take care by Spring bean.
-
-And for making sure that, the `@Component` is been injected rightly, we have to describe it with `@AutoWired` during class instance calling.
-
-
------
-
-IOC Container 
-. . 
-- The Bean factory 
-- Its a store which manages the beans, all the beans in a pool of beans 
-- When the instance creation/depdency call comes, ( with `@Component`/`@Service`/`@Controller`/`@RestController` & `@AutoWired` or setter/constructor injection), its going to create the bean & with help of Depdency injection it will inject the depdency of bean to right class. 
-- All these annotation`@Component`/`@Service`/`@Controller`/`@RestController` are sterotype meaning they are extending from same class 
-- And with `@Bean`, we can manually create the Bean for the classes by injecting them
+```java
+@Autowired
+private PaymentService paymentService;
 ```
+
+---
+
+### ✅ Application Context (IoC Container)
+
+Spring's Brain that:
+
+* Creates Beans
+* Injects Dependencies
+* Manages Lifecycle
+* Handles Scopes
+
+---
+
+### ✅ MVC Annotations
+
+| Purpose   | Annotation        |
+| --------- | ----------------- |
+| API Layer | `@RestController` |
+| Web Pages | `@Controller`     |
+| Routing   | `@RequestMapping` |
+| Services  | `@Service`        |
+| DAO Layer | `@Repository`     |
+
+---
+
+## 7. Creating Beans Manually
+
+```java
 @Configuration
 public class AppConfig {
 
     @Bean
-    PaymentService paymentService(){
+    public PaymentService paymentService() {
         return new PaymentService();
     }
 }
 ```
-- Here, the class, is annotated with `@Configuration`, which describes that, all the managment of `beans` will be created by this class 
-- `@Bean`, tells to inject the depdency of paymentService manually using contructor dependency. 
-- Priority = `Configuration` class > `@Component`/`@Service`/`@Controller`/`@RestController`
 
-> NOTE : IOC container or Spring's(IOC) container or Application context all are same. 
+### ✅ Priority Order
 
-##### Bean Life Cycle 
+```
+@Configuration > @Component / @Service / @Controller
+```
 
-1. Bean creation : The spring conatiner ( Application context ) scans all the `@Componenet` & describes all the beans that needs to be created 
-2. Dependency injection phase : Once the beans are created, these are injected to the class via the constructor or setter injection
-3. Bean Initialization phase : It initialise all the dependency of the class & run that bean or code or triggers that class with all the required beans 
-4. Bean is Used : Before the bean is been used, it runs a hook `postCreate` to trigger or check if the bean is used. 
-5. Bean is destroyed : Once the dependency is been statisfied, the bean will be destroyed. 
+---
 
-These life cycle will be taken care by Spring IOC container or Application Context. 
+## 8. Bean Lifecycle
 
-** Bean Life Cyle methods **
+| Phase                | Description        |
+| -------------------- | ------------------ |
+| Creation             | Bean instantiated  |
+| Dependency Injection | Dependencies wired |
+| Initialization       | Post setup         |
+| Usage                | Bean used          |
+| Destruction          | Cleanup            |
 
-1. `@PostConstruct` : This method is triggered when the bean is initialized & before its used 
-2. `@PreDestroy` : This is called right before, bean is destoryed. 
+### Lifecycle Hooks
 
+```java
+@PostConstruct
+@PreDestroy
+```
 
-** Bean Scopes **
-|** |**|
-|Scope| use-case |
-|Singleton| only one instance of bean per app , useful for services, repositories |
-|prototype(`@scope('prototype')`)| create new instance every time, useful for stateful objections, request data |
-|request| one bean per HTTP request, useful for web apps only |
-|application | one per ServerletContext, for Global config |
-|session | one per user session, for shopping cart |
+✅ Used heavily in:
 
+* DB connection pools
+* Kafka consumers
+* Cache loaders
 
-### Dependency Injection in Spring framework 
+---
 
+## 9. Bean Scopes
 
+| Scope         | Use Case             |
+| ------------- | -------------------- |
+| `singleton`   | Default, services    |
+| `prototype`   | New object each time |
+| `request`     | One per HTTP request |
+| `session`     | One per user         |
+| `application` | Global config        |
 
-### Spring boot vs Spring Framework
+---
+
+## 10. Dependency Injection Example
+
+❌ Tight Coupling
+
+```java
+class OrderService {
+  private EmailService emailService = new EmailService();
+}
+```
+
+✅ Loose Coupling (Constructor Injection)
+
+```java
+class OrderService {
+
+  private final EmailService emailService;
+
+  public OrderService(EmailService emailService){
+    this.emailService = emailService;
+  }
+}
+```
+
+✅ Benefits:
+
+* Immutable dependencies
+* Easy Testing
+* Flexible switching (Email → SMS → Push)
+
+---
+
+## 11. Multiple Bean Conflict Handling
+
+If multiple beans exist:
+
+| Strategy                 | Priority           |
+| ------------------------ | ------------------ |
+| Env Variable             | ✅ Highest          |
+| `@ConditionalOnProperty` | ✅                  |
+| `@Qualifier`             | ✅                  |
+| `@Primary`               | ✅ Default fallback |
+
+---
+
+## 12. Spring Boot vs Spring Framework
+
+| Feature    | Spring        | Spring Boot         |
+| ---------- | ------------- | ------------------- |
+| Setup      | Manual        | Auto-config         |
+| Server     | External      | Embedded            |
+| Config     | Heavy XML     | Zero XML            |
+| Use Case   | Custom legacy | Modern apps         |
+| Popularity | Medium        | ✅ Industry standard |
+
+---
+
+## 13. Project Setup Using Spring Initializr
+
+* Visit: [https://start.spring.io](https://start.spring.io)
+* Select:
+
+  * Maven
+  * Java
+  * Spring Boot Version
+  * Dependencies (Web, JPA, Security)
+
+---
+
+## 14. Spring Boot Project Structure
+
+```
+src/main/java    → Business Logic
+src/main/resources → application.properties
+src/test/java → Unit & Integration Tests
+pom.xml → Dependency Manager
+```
+
+---
+
+## 15. Real-World Production Mapping
+
+| Concept     | Real-World Use         |
+| ----------- | ---------------------- |
+| Beans       | Microservices          |
+| IoC         | Kubernetes Pod Control |
+| DI          | Feature toggles        |
+| Profiles    | Dev/Stage/Prod         |
+| Auto Config | AWS Infra Boot         |
+
+Used daily at:
+
+* Amazon Seller APIs
+* Instagram Backend
+* OpenAI API Servers
+* Netflix Streaming
+
+---
+
+## 16. What You Will Learn Next
+
+* Auto Configuration & Internals
+* Spring Application Context Flow
+* Maven Build Tool
+* REST API Design
+* Schema Design
+* Live Project: Airbnb Clone
+
+---
+
+# ✅ Revision Summary
+
+* ✅ Spring removes manual object wiring
+* ✅ Spring Boot removes all setup pain
+* ✅ Beans + IoC = scalable architecture
+* ✅ DI enables testable & modular systems
+* ✅ Used in **billions of API calls daily**
+
+---
+
+If you want, next I can:
+
+✅ Add **diagrams for IoC, Beans, MVC flow**
+✅ Explain **Auto-Configuration Internals step-by-step**
+✅ Convert this into **interview-ready Q&A format**
+✅ Map this to **your Amazon production systems**
+
 
 ### Auto configuration, Application Context & Internal working of a Spring boot Application 
 
