@@ -339,8 +339,48 @@ If you want, next I can:
 
 ### Auto configuration, Application Context & Internal working of a Spring boot Application 
 
+**Auto-Configuration**
+Auto-Configuration is a mechanism which loads/configures spring application based on the classpath & other specified dependencies in settings.
+
+**How Auto-Configuration works**
+
+1. It does the classPath scaning : Scans the classpath for presence of certain libraries & classes, then applied corresponding configurations 
+2. Congfiguration Classes : Spring Boot contains numerous autoconfiguration classes, each responsible for configuring a specific part of the application.
+3. Conditional beans : Each autoconfiguration class uses conditional checks to decide if it should be applied. These conditions include the presence of specific classes, the absence of user-defined beans, and specific property settings.
+
+> [Checkout offical-link](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html) 
+
+
+**Spring Boot Internal flow**
+
+1. Initialization : When you start a Spring Boot application, the main entry point is typically a class annotated with @SpringBootApplication (or its meta-annotations). This annotation combines several other annotations such as @Configuration, @EnableAutoConfiguration, and @ComponentScan.
+2. Spring Application Context creation : Spring Boot creates an application context, which serves as the container for managing beans and their dependencies. It scans the classpath for components, configurations, and auto-configurations, and initializes application context based on the detected classes and dependencies.
+3. Auto Configuration : Spring Boot auto-configures beans and components based on the classpath and detected dependencies. It uses conditional annotations (@ConditionalOnClass, @ConditionalOnBean, etc.) to conditionally configure beans only if certain conditions are met.
+4. Externalized configuration : Spring Boot loads configuration properties from various sources, such as property files, YAML files, environment variables, and command-line arguments. It provides sensible default values for configuration properties and allows them to be easily overridden or customized.
+5. Embedded Web server Initialization : If the application is a web application, Spring Boot initializes the embedded web server (such as Tomcat, Jetty, or Undertow) based on the application's dependencies and configurations. It configures the server with sensible defaults and starts it to listen for incoming requests.
+6. Application startup : Spring Boot invokes lifecycle callbacks such as @PostConstruct methods and initialization callbacks on beans as the application context is being initialized. Beans are instantiated, dependencies are injected, and any necessary initialization logic is executed.
+7. Application ready : Once the initialization process is complete, the application context is fully initialized and ready to handle requests. The embedded web server is up and running, and the application is ready to serve incoming HTTP requests.
+
+![alt text](image.png)
 ### Maven build tool 
 
 ### Tasks 
+1. Make a list of all the annotations learned until this module & there use cases
+| Annotation | Purpose |
+| @Component | At class level, makes the regular java class to Spring managed bean |
+| @EnableAutoConfiguration | At springboot application level, enables all the configurations required for running the application |
+| @ComponentScan | At application level, scans all the beans, marked using @Component |
+| @Bean | Spring managed POJO class | 
+| @Scope | Method, or attribute level, defines how the behaviour of object to be created, @Scope("prototype") -> multiple object instances, @Scope("singleton") -> only single instance of object at application level |
+| @Primary | Used, when multiple beans are injected at runtime, with @Primary, we can specify this is primary bean to get injected | 
+| `@Qualifier` | used, when dealing with multiple beans injecttion at runtime | 
+| `@ConditionalOnProperty`(name = "notification.type", havingValue = "email") |  used when dealing with multiple beans injecttion at runtime |
 
-### Live coding & requirement gathering -> Schema design, Entity relationship, API's design of Airbub project
+2. Make a list of scenarios where you feel spring boot is more useful than spring framework 
+- Spring framework is a dependency injection framework, it has IOC container & Application context to manage the depdencies, which gets injected at runtime, where as SpringBoot provides a more additional features, like embedded tomcat server, quick application headsup and less configurations. 
+
+- Create a class called CakeBaker, that is dependent on two other classes called Frosting and Syrup. This class has a function called bakeCake(). 
+- Create two interfaces of type Frosting and Syrup with a function called getFrostingType and getSyrupType respectively. 
+- Create two implementations of these two interfaces (so total 4 classes) for Chocolate and Strawberry flavors. 
+- Use Dependency injection to inject the Frosting and Syrup dependencies into CakeBaker and also to call the bakeCake function of the CakeBaker class.
+

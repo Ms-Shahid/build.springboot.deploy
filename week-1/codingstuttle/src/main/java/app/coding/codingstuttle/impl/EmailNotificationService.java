@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
-//@Primary
+@Primary
 //@ConditionalOnProperty(name = "notification.type", havingValue = "email")
 public class EmailNotificationService implements Notification {
 
