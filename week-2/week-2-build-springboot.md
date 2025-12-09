@@ -35,7 +35,19 @@ The `@RestController` annotation is a shorthand for `@Controller` & `@ResponseBo
 
 ### 2.3 The persistence Layer & JPA Repository 
 
+**Java Persistence API - JPA**
+
+JPA -> JPA Provider ( hibernate ) -> API JDBC -> Driver Connector or Driver PostgreSQL -> MYSQL or PostgreSQL 
+
+Hibernate : JPA provider specification ( ORM : Object -> Tables )  
+          and Java Persistance Query Language -> SQL Query 
+
+JPQL ( Java Persistance Query Language )
+
+`@Entity` -> Java Class convert this into Table name
+
 ### 2.4 The service Layer, writing business logic 
+
 
 ### 2.5 PUT, PATCH & DELETE Mapping in spring web MVC
 
