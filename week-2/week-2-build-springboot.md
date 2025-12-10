@@ -51,6 +51,12 @@ JPQL ( Java Persistance Query Language )
 
 ### 2.5 PUT, PATCH & DELETE Mapping in spring web MVC
 
+**Reflections**
+Reflections -> using reflections, we can go to any object & update the fields of that object. it works by inversely updating the field values.
+
+`@JsonProperty("property-name")` : when you want json to handle the convertion of JSON -> JAVA object -> JSON 
+`org.springframework.http.ResponseEntity` -> Used in controller to handle the status codes & return of the right status code in response  
+
 ### 2.6 Input Validation Annotations, Creating custom Annotation for validation 
 
 ### 2.7 Exception Handling in spring Boot web MVC 

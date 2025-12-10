@@ -10,9 +10,9 @@ public class UserDTO {
 
     public UserDTO(){}
 
-    public UserDTO(Long userId, String userName, String email, Integer age) {
+    public UserDTO(Long userId, String name, String email, Integer age) {
         this.userId = userId;
-        this.userName = userName;
+        this.userName = name;
         this.email = email;
         this.age = age;
     }
