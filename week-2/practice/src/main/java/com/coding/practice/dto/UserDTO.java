@@ -1,51 +1,38 @@
 package com.coding.practice.dto;
 
+import com.coding.practice.annotations.UserRoleValidation;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
     private Long userId;
-    private String userName;
+
+    @NotNull(message = "Required field")
+    @Size(min = 3, max = 10, message = "The name length should be in range[3,10]")
+    private String name;
+
+    @Email(message = "Not a valid email")
     private String email;
+
+    @Max(value = 80, message = "Age can't be more than 80")
+    @Min(value = 18, message = "Age can't be less then 18")
     private Integer age;
 
+   // @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of user")
+    @UserRoleValidation
+    @NotBlank(message = "Role can't be blank")
+    private String role;
 
-    public UserDTO(){}
+    @DecimalMax(value = "100000.99")
+    @DecimalMin(value = "100.99")
+    private Double salary;
 
-    public UserDTO(Long userId, String name, String email, Integer age) {
-        this.userId = userId;
-        this.userName = name;
-        this.email = email;
-        this.age = age;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 }

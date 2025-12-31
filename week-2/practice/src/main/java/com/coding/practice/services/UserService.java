@@ -2,6 +2,7 @@ package com.coding.practice.services;
 
 import com.coding.practice.dto.UserDTO;
 import com.coding.practice.entities.User;
+import com.coding.practice.exceptions.ResourceNotFoundException;
 import com.coding.practice.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.util.ReflectionUtils;
@@ -49,6 +50,8 @@ public class UserService {
     }
 
     public UserDTO updateUserId(UserDTO userDTO, Long userId) {
+        isExistsByUserById(userId);
+
         User user = modelMapper.map( userDTO, User.class );
         user.setUserId(userId);
         User savedUser = userRepository.save(user);
@@ -60,7 +63,7 @@ public class UserService {
     public boolean deleteUserById(Long userId) {
         isExistsByUserById(userId);
         userRepository.deleteById(userId);
-        return isExistsByUserById(userId);
+        return true;
     }
 
     public UserDTO updatePartialUserById(Map<String, Object> partialUpdates, Long userId) {
@@ -76,8 +79,9 @@ public class UserService {
         return modelMapper.map( userRepository.save(user), UserDTO.class);
     }
 
-    public boolean isExistsByUserById(Long userId){
-        return userRepository.existsById(userId);
+    public void isExistsByUserById(Long userId){
+        boolean exists = userRepository.existsById(userId);
+        if(!exists) throw new ResourceNotFoundException("User not found with id: "+userId);
     }
 
     public static Field findRequiredField(Class<?> type, String name){

@@ -1,13 +1,16 @@
 package com.coding.practice.controllers;
 
 import com.coding.practice.dto.UserDTO;
+import com.coding.practice.exceptions.ResourceNotFoundException;
 import com.coding.practice.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +29,7 @@ public class UserController {
         Optional<UserDTO> userDTO = userService.getUserById(userId);
         return userDTO
                 .map( userDTO1 -> ResponseEntity.ok(userDTO1) )
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("User Not found!"));
     }
 
     @GetMapping
@@ -35,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createNewUser( @RequestBody UserDTO newUser ){
+    public ResponseEntity<UserDTO> createNewUser( @RequestBody @Valid UserDTO newUser ){
         UserDTO savedUser = userService.createNewUser(newUser);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -59,4 +62,9 @@ public class UserController {
         if( userDTO == null ) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(userDTO);
     }
+
+//    @ExceptionHandler(NoSuchElementException.class)
+//    public ResponseEntity<String> handleUserNotFound(NoSuchElementException exception){
+//        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+//    }
 }

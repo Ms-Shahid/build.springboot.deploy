@@ -131,7 +131,7 @@ private PaymentService paymentService;
 
 ### ✅ Application Context (IoC Container)
 
-Spring's Brain that:
+Spring's Bean that:
 
 * Creates Beans
 * Injects Dependencies
